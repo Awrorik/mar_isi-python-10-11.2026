@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Mar_isi/world",page_icon="https://www.flaticon.com/free-icon/vampire_570863", layout="wide")
 st.title("Привет, ты на сайте Mar_isi")
 import streamlit as st
-tab1, tab2,tab3  = st.tabs(["Про меня", "Путешествия", "Полезные ссылки"])
+tab1, tab2, tab3  = st.tabs(["Про меня", "Путешествия", "Полезные ссылки"])
 with tab1: 
   st.header("факты про меня")
   col1, col2 =st.columns([1,2 ])
@@ -44,9 +44,10 @@ with tab2:
             st.subheader(":Швейцария ")
             st.write(":yellow[- Когда я была в фридрисхафене мы с семьей решили поехать в Швейцарию на яхте, переплыв Боденское озеро мы ездили осматривая Швейцарию. была я в Цюрихе,Романсрохне,санкт-галлене. Швейцария такая же чистая как и германия, мне понравилось там,я бы также хотела там жить, там очень красивые горы и там делают вкусный шоколад, мне понравились очень красвые города и природа,хочу поездить на поезде среди Гор Альп и насладится видом гор]")
     with tab3:
+     
      st.title("Полезные ссылки ")
      st.subheader(" несколько полезных ссылок на сайты, которые про путешествия:")
-     col1,col2=st.columns([1,2])
+     col1,col2,col3=st.columns([2,2,1.5])
      with col1:
       st.markdown(":yellow[ссылки на сайты]:")
       st.write(":yellow[https://trips.com.ua/?utm_source]")
@@ -57,4 +58,32 @@ with tab2:
          st.write(":yellow[https://ua-travels.in.ua/?utm_source]")
          st.write(":yellow[https://wanderlust.com.ua/?utm_source]")
          st.write(":yellow[https://discover.in.ua/?utm_source]")
-        
+    with col3:
+          st.image("photo_2026-10-30_15-40-28.jpg")
+
+    st.title("Игра угадай число")
+    import random
+    if 'secret_number' not in st.session_state:
+        st.session_state.secret_number = random.randint(1, 100)
+        st.session_state.attempts = 0
+        st.session_state.game_over = False
+        st.subheader("🎲 Игра: Угадай число от 1 до 100 🤍")
+    
+user_guess = st.number_input("Твой вариант:", min_value=1, max_value=100, step=1)
+    
+if st.button("Проверить"):
+        st.session_state.attempts += 1
+        if user_guess < st.session_state.secret_number:
+            st.info("📈Число Больше!")
+        elif user_guess > st.session_state.secret_number:
+            st.info("📉Число Меньше!")
+        else:
+            st.success(f"🎉 Ура ты угадал число 🙌🏼 {st.session_state.secret_number} за {st.session_state.attempts} спроб!")
+            st.session_state.game_over = True
+            
+if st.button("Играть снова"):
+        st.session_state.secret_number = random.randint(1, 100)
+        st.session_state.attempts = 0
+        st.session_state.game_over = False
+        st.rerun()
+   
